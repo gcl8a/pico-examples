@@ -1,5 +1,44 @@
+# Generated Cmake Pico project file
+
+cmake_minimum_required(VERSION 3.13)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Initialise pico_sdk from installed location
+# (note this can come from environment, CMake cache etc)
+
+# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.1.1)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.1.1)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+# ====================================================================================
+set(PICO_BOARD pico_w CACHE STRING "Board type")
+
+# Pull in Raspberry Pi Pico SDK (must be before project)
+include(pico_sdk_import.cmake)
+
+project(picow_mqtt_client C CXX ASM)
+
+# Initialise the Raspberry Pi Pico SDK
+pico_sdk_init()
+
 # Define the host name of the MQTT server in an environment variable or pass it to cmake,
 # e.g. cmake -DMQTT_SERVER=myserver ..
+
+set(MQTT_SERVER 516c8e090db54c9fae11d69b44623587.s1.eu.hivemq.cloud)
+set(MQTT_USERNAME gcl8a)
+set(MQTT_PASSWORD 5chl0Emer)
 
 if (DEFINED ENV{MQTT_SERVER} AND (NOT MQTT_SERVER))
     set(MQTT_SERVER $ENV{MQTT_SERVER})
@@ -31,6 +70,8 @@ endif()
 # Set the name of the certificate include file
 if (NOT MQTT_CERT_INC)
     set(MQTT_CERT_INC mqtt_client.inc)
+    message("Including certificate file ('${MQTT_CERT_INC}')")
+    message("Path to certificate file ('${MQTT_CERT_PATH}')")
 endif()
 
 set(TARGET_NAME picow_mqtt_client)
@@ -50,8 +91,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/.. # for our common lwipopts or any other standard includes, if required
     )
 target_compile_definitions(${TARGET_NAME} PRIVATE
-    WIFI_SSID=\"${WIFI_SSID}\"
-    WIFI_PASSWORD=\"${WIFI_PASSWORD}\"
+    WIFI_SSID=\"SpectrumSetup-3C\"
+    WIFI_PASSWORD=\"freemusic218\"
     MQTT_SERVER=\"${MQTT_SERVER}\"
     )
 if (EXISTS "${MQTT_CERT_PATH}/${MQTT_CERT_INC}")

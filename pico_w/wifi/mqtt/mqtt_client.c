@@ -350,6 +350,7 @@ int main(void) {
 #endif
 
     cyw43_arch_enable_sta_mode();
+    printf("Connecting to WiFi: %s", WIFI_SSID);
     if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 30000)) {
         panic("Failed to connect");
     }
